@@ -1,5 +1,4 @@
 ﻿#include "stdafx.h"
-//#pragma comment(lib, "ws_2_32.lib")
 
 using namespace std;
 
@@ -28,6 +27,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	cout << "Client sucesfull connect" << endl;
+	char msg[256];
+	//recv(Connection, msg, sizeof(msg), NULL);
 
 	system("pause");
 	return 0;
