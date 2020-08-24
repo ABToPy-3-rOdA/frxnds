@@ -27,8 +27,16 @@ int main(int argc, char* argv[]) {
 	}
 
 	cout << "Client sucesfull connect" << endl;
+	
 	char msg[256];
-	//recv(Connection, msg, sizeof(msg), NULL);
+	cin >> msg;
+	cout << msg << endl;
+	if (send(Connection, msg, sizeof(msg), NULL) != 0) {
+		cout << "message delivered successfully" << endl;
+	}
+	else {
+		cout << "Message delivery error" << endl;
+	}
 
 	system("pause");
 	return 0;
