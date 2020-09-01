@@ -1,22 +1,18 @@
 ﻿#include "stdafx.h"
-#pragma comment(lib, "ws2_32.lib")
-#include <winsock2.h> 
-#include <iostream>
-
-#pragma warning(disable: 4996)
+using namespace std;
 
 int main(int argc, char* argv[]) {
 	//WSAStartup
 	WSAData wsaData;
 	WORD DLLVersion = MAKEWORD(2, 1);
 	if (WSAStartup(DLLVersion, &wsaData) != 0) {
-		std::cout << "Error" << std::endl;
+		cout << "Error" << endl;
 		exit(1);
 	}
 
 	SOCKADDR_IN addr;
 	int sizeofaddr = sizeof(addr);
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	addr.sin_addr.s_addr = inet_addr("94.19.212.66"); //это внешний ip
 	addr.sin_port = htons(1111);
 	addr.sin_family = AF_INET;
 
@@ -28,9 +24,9 @@ int main(int argc, char* argv[]) {
 	newConnection = accept(sListen, (SOCKADDR*)&addr, &sizeofaddr);
 
 	if (newConnection == 0) {
-		std::cout << "Error #2\n";
+		cout << "Connect error" << endl;
 	} else {
-		std::cout << "Client Connection!\n";
+		cout << "Client Connection!" << endl;
 	}
 
 	system("pause");
