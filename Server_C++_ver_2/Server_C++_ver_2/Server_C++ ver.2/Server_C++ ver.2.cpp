@@ -1,6 +1,22 @@
 ﻿#include "stdafx.h"
 using namespace std;
 
+SOCKET Connections[100];
+int Counter = 0;
+
+void ClientHandler(int index) {
+	char msg[256];
+	while (true) {
+		recv(Connections[index], msg, sizeof(msg), NULL);
+		for (int i = 0; i < Counter; i++) {
+			if (i == index) {
+				continue;
+			}
+			send(Connections[i], msg, sizeof(msg), NULL);
+		}
+	}
+}
+
 int main(int argc, char* argv[]) {
 	//WSAStartup
 	WSAData wsaData;
@@ -21,12 +37,19 @@ int main(int argc, char* argv[]) {
 	listen(sListen, SOMAXCONN);
 
 	SOCKET newConnection;
-	newConnection = accept(sListen, (SOCKADDR*)&addr, &sizeofaddr);
+	for (int i = 0; i < 100; i++) {
 
-	if (newConnection == 0) {
-		cout << "Connect error" << endl;
-	} else {
-		cout << "Client Connection!" << endl;
+		newConnection = accept(sListen, (SOCKADDR*)&addr, &sizeofaddr);
+
+		if (newConnection == 0) {
+			cout << "Connect error" << endl;
+		}
+		else {
+			cout << "Client Connection!" << endl;
+			Connections[i] = newConnection;
+			Counter++;
+			CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientHandler, (LPVOID)(i), NULL, NULL);
+		}
 	}
 
 	system("pause");
