@@ -6,14 +6,20 @@ int Counter = 0;
 
 void ClientHandler(int index) {
 	char msg[256];
+	int msg_size;
 	while (true) {
-		recv(Connections[index], msg, sizeof(msg), NULL);
+		recv(Connections[index], (char*)&msg_size, sizeof(int), NULL);
+		char *msg = new char[msg_size + 1];
+		msg[msg_size] = '\0';
+		recv(Connections[index], msg, msg_size, NULL);
 		for (int i = 0; i < Counter; i++) {
 			if (i == index) {
 				continue;
 			}
-			send(Connections[i], msg, sizeof(msg), NULL);
+			send(Connections[i], (char*)&msg_size, sizeof(int), NULL);
+			send(Connections[i], msg, msg_size, NULL);
 		}
+		delete[] msg;
 	}
 }
 
@@ -42,10 +48,10 @@ int main(int argc, char* argv[]) {
 		newConnection = accept(sListen, (SOCKADDR*)&addr, &sizeofaddr);
 
 		if (newConnection == 0) {
-			cout << "Connect error" << endl;
+			std::cout << "Connect error" << endl;
 		}
 		else {
-			cout << "Client Connection!" << endl;
+			std::cout << "Client Connection!" << endl;
 			Connections[i] = newConnection;
 			Counter++;
 			CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientHandler, (LPVOID)(i), NULL, NULL);

@@ -1,2 +1,3 @@
 ﻿  Server_C++ ver.2.cpp
-  Server_C++ ver.2.vcxproj -> C:\Users\MSI\Desktop\Git\frxnds\Server_C++ ver.2\Server_C++ ver.2\Debug\Server_C++ ver.2.exe
+c:\users\msi\desktop\git\frxnds\server_c++_ver_2\server_c++_ver_2\server_c++ ver.2\server_c++ ver.2.cpp(8): warning C4101: msg: неиспользованная локальная переменная
+  Server_C++ ver.2.vcxproj -> C:\Users\MSI\Desktop\Git\frxnds\Server_C++_ver_2\Server_C++_ver_2\Debug\Server_C++ ver.2.exe
